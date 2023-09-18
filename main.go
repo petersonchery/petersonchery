@@ -1,21 +1,34 @@
 package main
 
 import (
-	"FirstProject/config"
-	"FirstProject/route"
+	//"FirstProject/controller"
+	"FirstProject/dao"
 	"net/http"
 	"time"
-	//"FirstProject/dao"
 	//"github.com/lib/pq"
 	//"fmt"
 )
 
 func main() {
 
-	config.InitDB("user=postgres password=admin dbname=MyBase sslmode=disable host=192.168.10.146 port=5432")
+	dao.Connect()
 
-	router := route.GetRouter()
-	server := &http.Server{Handler: router, Addr: ":8080", ReadTimeout: time.Second * 10, WriteTimeout: time.Second * 10}
+	server := &http.Server{
+		Addr:         ":8080",
+		ReadTimeout:  time.Second * 10,
+		WriteTimeout: time.Second * 10,
+	}
+	router := http.NewServeMux()
+
 	server.ListenAndServe()
+
+//	// route.Welcome()
+	//route.Menu()
+	//rest.GestionDeRoute2()
+
+	//
+	//model.Livre = append(model.Liv, controller.Ajouter_livre())
+
+	//.Print(model.Liv)
 
 }
