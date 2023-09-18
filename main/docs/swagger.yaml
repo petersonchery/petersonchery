@@ -1,0 +1,1167 @@
+basePath: /
+definitions:
+  model.Bibliotheque:
+    properties:
+      id_bibliotheque:
+        type: integer
+      id_tenant:
+        type: integer
+      is_deleted:
+        type: boolean
+      nom_bibliotheque:
+        type: string
+    type: object
+  model.Client:
+    properties:
+      email_client:
+        type: string
+      id_client:
+        type: integer
+      nom_client:
+        type: string
+      password_client:
+        type: string
+    type: object
+  model.Emprunt:
+    properties:
+      date_emprunt:
+        type: string
+      date_retour:
+        type: string
+      id_emprunt:
+        type: integer
+      id_livre_emprunt:
+        type: integer
+      id_tenant:
+        type: integer
+    type: object
+  model.Livre:
+    properties:
+      auteur:
+        type: string
+      description_livre:
+        type: string
+      id_bibliotheque:
+        type: integer
+      id_livre:
+        type: integer
+      titre_livre:
+        type: string
+    type: object
+  model.Role:
+    properties:
+      id_role:
+        type: integer
+      nom_role:
+        type: string
+    type: object
+  model.Tenant:
+    properties:
+      id_tenant:
+        type: integer
+      nom_tenant:
+        type: string
+    type: object
+  model.Users:
+    properties:
+      email_user:
+        description: "Id_role   int //on va avoir 3 roles: admin, bibliothecaire,
+          simpleUser\n\tPermission []string // les permissions sont les actions que
+          les roles peuvent effectuer"
+        type: string
+      id_role:
+        type: integer
+      id_session:
+        type: integer
+      id_tenant:
+        type: integer
+      id_user:
+        type: integer
+      nom_user:
+        type: string
+      password_user:
+        type: string
+    type: object
+host: 192.168.10.146:8080
+info:
+  contact:
+    email: Petersonchery33@gmail.com
+    name: Peterson Chery
+  description: This is a document for Tainosystems
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://tainosystems.com
+  version: "1.0"
+paths:
+  /api/v1/bibliotheques:
+    post:
+      consumes:
+      - application/json
+      description: Add a library
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: Bibliotheque
+        required: true
+        schema:
+          $ref: '#/definitions/model.Bibliotheque'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add a library
+      tags:
+      - Bibliotheque
+  /api/v1/bibliotheques/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a library By ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID bibliotheque
+        in: path
+        name: ID_bibliotheque
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Bibliotheque'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a library By ID
+      tags:
+      - Bibliotheque
+  /api/v1/bibliotheques/lis:
+    get:
+      consumes:
+      - application/json
+      description: Lister toutes les Bibliotheques
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Bibliotheque'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Lister toutes les Bibliotheques
+      tags:
+      - Bibliotheque
+  /api/v1/bibliotheques/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a library By ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID bibliotheque
+        in: path
+        name: ID_bibliotheque
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Bibliotheque'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a library By ID
+      tags:
+      - Bibliotheque
+  /api/v1/bibliotheques/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update library By Id
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID bibliotheque
+        in: path
+        name: ID_bibliotheque
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Bibliotheque
+        required: true
+        schema:
+          $ref: '#/definitions/model.Bibliotheque'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Bibliotheque'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a library By ID
+      tags:
+      - Bibliotheque
+  /api/v1/clients:
+    post:
+      consumes:
+      - application/json
+      description: Add a client
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: Client
+        required: true
+        schema:
+          $ref: '#/definitions/model.Client'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Client'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add a client
+      tags:
+      - Client
+  /api/v1/clients/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a client by ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID client
+        in: path
+        name: ID_client
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Client'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a client by ID
+      tags:
+      - Client
+  /api/v1/clients/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Client By ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID client
+        in: path
+        name: ID_client
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Client'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a Client By ID
+      tags:
+      - Client
+  /api/v1/clients/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update a Client By ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID client
+        in: path
+        name: ID_client
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Client
+        required: true
+        schema:
+          $ref: '#/definitions/model.Client'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Client'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: UpdateClient
+      tags:
+      - Client
+  /api/v1/emprunts:
+    post:
+      consumes:
+      - application/json
+      description: Ajouter un Emprunt pour un client
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID emprunt
+        in: path
+        name: ID_emprunt
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Emprunt
+        required: true
+        schema:
+          $ref: '#/definitions/model.Emprunt'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Emprunt'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Ajouter un Emprunt pour un client
+      tags:
+      - Emprunt
+  /api/v1/emprunts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get an emprunt by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID emprunt
+        in: path
+        name: ID_emprunt
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Emprunt'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get an emprunt by his ID
+      tags:
+      - Emprunt
+  /api/v1/emprunts/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete emprunt by ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID emprunt
+        in: path
+        name: ID_emprunt
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Emprunt'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete  emprunt by ID
+      tags:
+      - Emprunt
+  /api/v1/emprunts/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an emprunt by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID emprunt
+        in: path
+        name: ID_emprunt
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Emprunt
+        required: true
+        schema:
+          $ref: '#/definitions/model.Emprunt'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Emprunt'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update an emprunt by his ID
+      tags:
+      - Emprunt
+  /api/v1/livres:
+    post:
+      consumes:
+      - application/json
+      description: Add a book
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: Livre
+        required: true
+        schema:
+          $ref: '#/definitions/model.Livre'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Livre'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add a book
+      tags:
+      - Livre
+  /api/v1/livres/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a book by ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID Livre
+        in: path
+        name: ID_Livre
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Livre'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a book by ID
+      tags:
+      - Livre
+  /api/v1/livres/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a book by ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID emprunt
+        in: path
+        name: ID_emprunt
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Emprunt'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a book by ID
+      tags:
+      - Livre
+  /api/v1/livres/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an emprunt by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID livre
+        in: path
+        name: ID_livre
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Livre
+        required: true
+        schema:
+          $ref: '#/definitions/model.Livre'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Livre'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update an emprunt by his ID
+      tags:
+      - Livre
+  /api/v1/roles:
+    post:
+      consumes:
+      - application/json
+      description: Ajouter role
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: Role
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Role'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Ajouter role
+      tags:
+      - Role
+  /api/v1/roles/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Update a role by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID role
+        in: path
+        name: ID_role
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Role'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a role by his ID
+      tags:
+      - Role
+  /api/v1/roles/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete role by ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID role
+        in: path
+        name: ID_role
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Role'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete role by ID
+      tags:
+      - Role
+  /api/v1/roles/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update role by ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID role
+        in: path
+        name: ID_role
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Role
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Role'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update role by ID
+      tags:
+      - Role
+  /api/v1/tenants:
+    post:
+      consumes:
+      - application/json
+      description: Add a tenant
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: Tenant
+        required: true
+        schema:
+          $ref: '#/definitions/model.Emprunt'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Tenant'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add a tenant
+      tags:
+      - Tenant
+  /api/v1/tenants/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a tenant by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID tenant
+        in: path
+        name: ID_tenant
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Tenant'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a tenant by his ID
+      tags:
+      - Tenant
+  /api/v1/tenants/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a tenant by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID tenant
+        in: path
+        name: ID_tenant
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Tenant'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a tenant by his ID
+      tags:
+      - Tenant
+  /api/v1/tenants/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update a tenant by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID tenant
+        in: path
+        name: ID_tenant
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: Tenant
+        required: true
+        schema:
+          $ref: '#/definitions/model.Tenant'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Tenant'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a tenant by his ID
+      tags:
+      - Tenant
+  /api/v1/users:
+    post:
+      consumes:
+      - application/json
+      description: Create a user
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.Users'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Users'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create a user
+      tags:
+      - User
+  /api/v1/users/con:
+    post:
+      consumes:
+      - application/json
+      description: Connexion pour un utilisateur
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: project
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.Users'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Users'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Connexion pour un utilisateur
+      tags:
+      - Connexion
+  /api/v1/users/sup/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID User
+        in: path
+        name: ID_User
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Users'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a user by his ID
+      tags:
+      - User
+  /api/v1/users/up/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update a user by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID User
+        in: path
+        name: ID_User
+        required: true
+        type: integer
+      - description: project
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.Users'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Users'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a user by his ID
+      tags:
+      - User
+  /api/v1/users{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a user by his ID
+      parameters:
+      - description: api token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID User
+        in: path
+        name: ID_User
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Users'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a user by his ID
+      tags:
+      - User
+swagger: "2.0"

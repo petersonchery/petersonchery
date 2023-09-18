@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form">
+        <input name="name"  type="text" id="name">
+        <button type="submit">send</button>
+    </form>
+
+    <script>          
+            let form = document.getElementById("form")
+            form.addEventListener("submit", function(){
+                event.preventDefault();
+
+                let name = document.getElementById('name').value
+
+                let payload = {"Nom_bibliotheque" : name}
+
+                fetch("http://localhost:8080/api/v1/bibliotheques", {
+                    method:"POST",
+                    body:JSON.stringify(payload)
+                })
+            })
+
+    </script>
+</body>
+</html>
